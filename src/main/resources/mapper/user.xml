@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lrq.demo.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.lrq.demo.model.User">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="idNo" property="idNo" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="addUser" parameterType="com.lrq.demo.model.User">
+        insert into user
+        (
+         name,
+         idNo,
+         gender
+        )values(
+        #{name},
+        #{idNo},
+        #{gender}
+        )
+    </insert>
+
+
+    <select id="getUserByName" parameterType="map" resultMap="BaseResultMap">
+        select * from user o
+        <where>
+            <if test='name != null and name != ""'>
+                o.name = #{name}
+            </if>
+        </where>
+
+    </select>
+
+
+    <select id="findPageInfoByName" parameterType="map" resultMap="BaseResultMap">
+        select * from user o
+        <where>
+            <if test='name != null and name != ""'>
+                o.name like  concat('%',#{name},'%')
+            </if>
+        </where>
+
+    </select>
+
+
+
+
+
+
+</mapper>
